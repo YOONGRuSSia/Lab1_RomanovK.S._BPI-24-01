@@ -24,6 +24,41 @@ namespace Lab1_RomanovK.S._BPI_24_01
         public Window1()
         {
             InitializeComponent();
+            if (App.CurrentTheme == AppTheme.Dark)
+                rbDark.IsChecked = true;
+            else
+                rbLight.IsChecked = true;
+        }
+        private void Theme_Checked(object sender, RoutedEventArgs e)
+        {
+            if (!(sender is RadioButton rb)) return;
+            if (rb.Tag == null) return;
+
+            AppTheme theme = rb.Tag.ToString() == "Dark"
+                ? AppTheme.Dark
+                : AppTheme.Light;
+
+            App.ApplyTheme(theme);
+        }
+        // ============ СИСТЕМНЫЕ КНОПКИ ============
+        private void Minimize_Click(object sender, RoutedEventArgs e)
+        {
+            WindowState = WindowState.Minimized;
+        }
+
+        private void Close_Click(object sender, RoutedEventArgs e)
+        {
+            // Закрываем как диалог с результатом false (как «Отмена»)
+            DialogResult = false;
+        }
+
+        // ============ ПЕРЕТАСКИВАНИЕ ============
+        private void TitleBar_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if (e.ChangedButton == MouseButton.Left)
+            {
+                DragMove();
+            }
         }
 
         private void TxtFamiliya_PreviewTextInput(object sender, TextCompositionEventArgs e)

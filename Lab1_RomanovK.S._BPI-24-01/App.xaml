@@ -6,7 +6,10 @@
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="PurpleTheme.xaml"/>
+                <!-- 1. Сначала ТЕМА (цвета) -->
+                <ResourceDictionary Source="Themes/LightTheme.xaml"/>
+                <!-- 2. Потом СТИЛИ (ссылаются на цвета) -->
+                <ResourceDictionary Source="Styles.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>

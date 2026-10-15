@@ -39,6 +39,58 @@ namespace Lab1_RomanovK.S._BPI_24_01
 
             workers = incomingWorkers;
             listBoxWorkers.ItemsSource = workers;
+            if (App.CurrentTheme == AppTheme.Dark)
+                rbDark.IsChecked = true;
+            else
+                rbLight.IsChecked = true;
+        }
+
+        // ============ ТЕМА через RadioButton ============
+        private void Theme_Checked(object sender, RoutedEventArgs e)
+        {
+            if (!(sender is RadioButton rb)) return;
+            if (rb.Tag == null) return;
+
+            AppTheme theme = rb.Tag.ToString() == "Dark"
+                ? AppTheme.Dark
+                : AppTheme.Light;
+
+            App.ApplyTheme(theme);
+        }
+
+        // ============ СИСТЕМНЫЕ КНОПКИ ОКНА ============
+        private void Minimize_Click(object sender, RoutedEventArgs e)
+        {
+            WindowState = WindowState.Minimized;
+        }
+
+        private void Maximize_Click(object sender, RoutedEventArgs e)
+        {
+            WindowState = WindowState == WindowState.Maximized
+                ? WindowState.Normal
+                : WindowState.Maximized;
+        }
+
+        private void Close_Click(object sender, RoutedEventArgs e)
+        {
+            Close();
+        }
+
+        // ============ ПЕРЕТАСКИВАНИЕ ОКНА ЗА TITLEBAR ============
+        private void TitleBar_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if (e.ChangedButton == MouseButton.Left)
+            {
+                if (e.ClickCount == 2)
+                {
+                    // Двойной клик — развернуть/свернуть
+                    Maximize_Click(sender, e);
+                }
+                else
+                {
+                    DragMove();
+                }
+            }
         }
 
         private void TxtFamiliya_PreviewTextInput(object sender, TextCompositionEventArgs e)

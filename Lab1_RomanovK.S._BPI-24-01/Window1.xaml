@@ -8,39 +8,93 @@
         Title="Добавление сотрудника"
         Height="450" Width="420"
         MinWidth="420" MinHeight="450"
-        WindowStartupLocation="CenterScreen"
-        Style="{DynamicResource WindowStyle}">
+        WindowStartupLocation="CenterOwner"
+        WindowStyle="None"
+        AllowsTransparency="True"
+        Background="Transparent"
+        ResizeMode="CanResize"
+        Style="{StaticResource WindowStyle}">
 
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="15"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="15"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="10"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="15"/>
-            <RowDefinition Height="*"/>
-        </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="15"/>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="15"/>
-        </Grid.ColumnDefinitions>
+    <!-- Закруглённая рамка -->
+    <Border Background="{DynamicResource WindowBackgroundBrush}"
+            CornerRadius="8"
+            BorderBrush="{DynamicResource BorderBrushDark}"
+            BorderThickness="1">
+        <Border.Effect>
+            <DropShadowEffect BlurRadius="15" ShadowDepth="0" Opacity="0.3"/>
+        </Border.Effect>
 
-        <Border Grid.Row="1" Grid.Column="1"
-                Style="{DynamicResource WindowHeaderStyle}">
-            <TextBlock   Text="➕ Новый сотрудник"
-                       Style="{DynamicResource WindowHeaderTextStyle}"/>
-        </Border>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <!-- TitleBar -->
+                <RowDefinition Height="*"/>
+                <!-- Контент -->
+            </Grid.RowDefinitions>
 
-        <Border Grid.Row="3" Grid.Column="1"
-                Style="{DynamicResource PanelStyle}">
-            <Grid>
+            <!-- ============ TITLEBAR ============ -->
+            <Border Grid.Row="0"
+                    Background="{DynamicResource HeaderGradient}"
+                    CornerRadius="8,8,0,0"
+                    MouseLeftButtonDown="TitleBar_MouseDown">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+
+                    <!-- RadioButton темы -->
+                    <StackPanel Grid.Column="0"
+                                Orientation="Horizontal"
+                                VerticalAlignment="Center"
+                                Margin="15,0,0,0">
+                        <RadioButton x:Name="rbDark"
+                                     Content="Тёмная"
+                                     GroupName="Theme"
+                                     Style="{StaticResource ThemeRadioStyle}"
+                                     Checked="Theme_Checked"
+                                     Tag="Dark"/>
+                        <RadioButton x:Name="rbLight"
+                                     Content="Светлая"
+                                     GroupName="Theme"
+                                     Style="{StaticResource ThemeRadioStyle}"
+                                     Checked="Theme_Checked"
+                                     Tag="Light"/>
+                    </StackPanel>
+
+                    <!-- Заголовок -->
+                    <TextBlock Grid.Column="1"
+                               Text="Новый сотрудник"
+                               Foreground="{DynamicResource AccentTextBrush}"
+                               FontSize="14"
+                               FontWeight="SemiBold"
+                               HorizontalAlignment="Center"
+                               VerticalAlignment="Center"/>
+
+                    <!-- Кнопка закрытия -->
+                    <StackPanel Grid.Column="2"
+                                Orientation="Horizontal"
+                                VerticalAlignment="Center">
+                        <Button Content="—"
+                                Style="{StaticResource TitleBarButtonStyle}"
+                                Click="Minimize_Click"/>
+                        <Button Content="✕"
+                                Style="{StaticResource TitleBarCloseButtonStyle}"
+                                Click="Close_Click"/>
+                    </StackPanel>
+                </Grid>
+            </Border>
+
+            <!-- ============ КОНТЕНТ ============ -->
+            <Grid Grid.Row="1">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="15"/>
                     <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="10"/>
+                    <RowDefinition Height="Auto"/>
                     <RowDefinition Height="15"/>
+                    <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="15"/>
@@ -48,52 +102,45 @@
                     <ColumnDefinition Width="15"/>
                 </Grid.ColumnDefinitions>
 
-                <StackPanel Grid.Row="1" Grid.Column="1">
-                    <TextBlock Text="Фамилия:" Style="{StaticResource LabelStyle}"/>
-                    <TextBox x:Name="txtFamiliya" 
-                             Style="{StaticResource InputStyle}"
-                             PreviewTextInput="TxtFamiliya_PreviewTextInput"/>
+                <!-- Панель полей -->
+                <Border Grid.Row="1" Grid.Column="1"
+                        Style="{StaticResource PanelStyle}">
+                    <StackPanel Margin="15">
+                        <TextBlock Text="Фамилия:" Style="{StaticResource LabelStyle}"/>
+                        <TextBox x:Name="txtFamiliya"
+                                 Style="{StaticResource InputStyle}"
+                                 PreviewTextInput="TxtFamiliya_PreviewTextInput"/>
 
-                    <Rectangle Height="10" Fill="Transparent"/>
+                        <TextBlock Text="Должность:" Style="{StaticResource LabelStyle}"/>
+                        <TextBox x:Name="txtDolzhnost"
+                                 Style="{StaticResource InputStyle}"
+                                 PreviewTextInput="TxtDolzhnost_PreviewTextInput"/>
 
-                    <TextBlock Text="Должность:" Style="{StaticResource LabelStyle}"/>
-                    <TextBox x:Name="txtDolzhnost" 
-                             Style="{StaticResource InputStyle}"
-                             PreviewTextInput="TxtDolzhnost_PreviewTextInput"/>
+                        <TextBlock Text="Оклад:" Style="{StaticResource LabelStyle}"/>
+                        <TextBox x:Name="txtOklad"
+                                 Style="{StaticResource InputStyle}"
+                                 PreviewTextInput="TxtOklad_PreviewTextInput"
+                                 PreviewKeyDown="TxtOklad_PreviewKeyDown"/>
+                    </StackPanel>
+                </Border>
 
-                    <Rectangle Height="10" Fill="Transparent"/>
-
-                    <TextBlock Text="Оклад:" Style="{StaticResource LabelStyle}"/>
-                    <TextBox x:Name="txtOklad" 
-                             Style="{StaticResource InputStyle}"
-                             PreviewTextInput="TxtOklad_PreviewTextInput"
-                             PreviewKeyDown="TxtOklad_PreviewKeyDown"/>
-                </StackPanel>
+                <!-- Панель кнопок -->
+                <Border Grid.Row="3" Grid.Column="1"
+                        Style="{StaticResource PanelStyle}">
+                    <StackPanel Orientation="Horizontal"
+                                HorizontalAlignment="Center"
+                                Margin="0,12">
+                        <Button Content="Добавить"
+                                Width="130"
+                                Style="{StaticResource ButtonStyle}"
+                                Click="BtnAdd_Clickk"/>
+                        <Button Content="Отмена"
+                                Width="130"
+                                Style="{StaticResource ButtonStyle}"
+                                IsCancel="True"/>
+                    </StackPanel>
+                </Border>
             </Grid>
-        </Border>
-
-        <Border Grid.Row="5" Grid.Column="1"
-                Style="{DynamicResource PanelStyle}">
-            <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="12"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="12"/>
-                </Grid.RowDefinitions>
-                <StackPanel Grid.Row="1" 
-                            Orientation="Horizontal" 
-                            HorizontalAlignment="Center">
-                    <Button Content="Добавить" 
-                            Width="130" 
-                            Style="{StaticResource ButtonStyle}" 
-                            Click="BtnAdd_Clickk"/>
-                    <Rectangle Width="10" Fill="Transparent"/>
-                    <Button Content="Отмена" 
-                            Width="130" 
-                            Style="{StaticResource ButtonStyle}" 
-                            IsCancel="True"/>
-                </StackPanel>
-            </Grid>
-        </Border>
-    </Grid>
+        </Grid>
+    </Border>
 </Window>

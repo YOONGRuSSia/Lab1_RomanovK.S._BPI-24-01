@@ -5,170 +5,203 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Lab1_RomanovK.S._BPI_24_01"
         mc:Ignorable="d"
-        Title="Управление сотрудниками" Height="550" Width="950" 
-        MinWidth="950" MinHeight="550"
-        Style="{DynamicResource WindowStyle}">
+        Title="Управление сотрудниками" Height="600" Width="1000"
+        MinWidth="900" MinHeight="550"
+        WindowStyle="None"
+        AllowsTransparency="True"
+        Background="Transparent"
+        ResizeMode="CanResize"
+        Style="{StaticResource WindowStyle}">
 
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="15"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="15"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="15"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="15"/>
-        </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="15"/>
-            <ColumnDefinition Width="2*"/>
-            <ColumnDefinition Width="10"/>
-            <ColumnDefinition Width="1.3*"/>
-            <ColumnDefinition Width="15"/>
-        </Grid.ColumnDefinitions>
+    <!-- Контейнер окна с закруглением и тенью -->
+    <Border Background="{DynamicResource WindowBackgroundBrush}"
+            CornerRadius="8"
+            BorderBrush="{DynamicResource BorderBrushDark}"
+            BorderThickness="1">
+        <Border.Effect>
+            <DropShadowEffect BlurRadius="15" ShadowDepth="0" Opacity="0.3"/>
+        </Border.Effect>
 
-        <Border Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="3"
-                Style="{DynamicResource WindowHeaderStyle}">
-            <TextBlock Text="Управление сотрудниками"
-                       Style="{DynamicResource WindowHeaderTextStyle}"/>
-        </Border>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <!-- кастомный TitleBar -->
+                <RowDefinition Height="*"/>
+                <!-- контент -->
+            </Grid.RowDefinitions>
 
-        <Border Grid.Row="3" Grid.Column="1"
-                Style="{DynamicResource PanelStyle}">
-            <Grid>
+            <!-- ============ КАСТОМНЫЙ TITLEBAR ============ -->
+            <Border Grid.Row="0"
+                    Background="{DynamicResource HeaderGradient}"
+                    CornerRadius="8,8,0,0"
+                    MouseLeftButtonDown="TitleBar_MouseDown">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+
+                    <!-- RadioButton для темы -->
+                    <StackPanel Grid.Column="0"
+                                Orientation="Horizontal"
+                                VerticalAlignment="Center"
+                                Margin="15,0,0,0">
+                        <RadioButton x:Name="rbDark"
+                                     Content="Тёмная"
+                                     GroupName="Theme"
+                                     Style="{StaticResource ThemeRadioStyle}"
+                                     Checked="Theme_Checked"
+                                     Tag="Dark"/>
+                        <RadioButton x:Name="rbLight"
+                                     Content="Светлая"
+                                     GroupName="Theme"
+                                     Style="{StaticResource ThemeRadioStyle}"
+                                     Checked="Theme_Checked"
+                                     Tag="Light"/>
+                    </StackPanel>
+
+                    <!-- Заголовок окна -->
+                    <TextBlock Grid.Column="1"
+                               Text="Управление сотрудниками"
+                               Foreground="{DynamicResource AccentTextBrush}"
+                               FontSize="14"
+                               FontWeight="SemiBold"
+                               HorizontalAlignment="Center"
+                               VerticalAlignment="Center"/>
+
+                    <!-- Системные кнопки -->
+                    <StackPanel Grid.Column="2"
+                                Orientation="Horizontal"
+                                VerticalAlignment="Center">
+                        <Button Content="—"
+                                Style="{StaticResource TitleBarButtonStyle}"
+                                Click="Minimize_Click"/>
+                        <Button Content="☐"
+                                Style="{StaticResource TitleBarButtonStyle}"
+                                Click="Maximize_Click"/>
+                        <Button Content="✕"
+                                Style="{StaticResource TitleBarCloseButtonStyle}"
+                                Click="Close_Click"/>
+                    </StackPanel>
+                </Grid>
+            </Border>
+
+            <!-- ============ ОСНОВНОЙ КОНТЕНТ (бывший Grid) ============ -->
+            <Grid Grid.Row="1">
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="15"/>
                     <RowDefinition Height="*"/>
-                </Grid.RowDefinitions>
-
-                <Border Grid.Row="0" Style="{DynamicResource TableHeaderStyle}">
-                    <Grid>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="8"/>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="8"/>
-                        </Grid.RowDefinitions>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="2*"/>
-                            <ColumnDefinition Width="2*"/>
-                            <ColumnDefinition Width="1.2*"/>
-                        </Grid.ColumnDefinitions>
-                        <TextBlock Grid.Row="1" Grid.Column="0" Text="Фамилия" 
-                                   Style="{StaticResource HeaderCellStyle}"/>
-                        <TextBlock Grid.Row="1" Grid.Column="1" Text="Должность" 
-                                   Style="{StaticResource HeaderCellStyle}"/>
-                        <TextBlock Grid.Row="1" Grid.Column="2" Text="Оклад" 
-                                   Style="{StaticResource HeaderCellStyle}"
-                                   HorizontalAlignment="Right"/>
-                    </Grid>
-                </Border>
-
-                <ListBox x:Name="listBoxWorkers" 
-                         Grid.Row="1"
-                         Background="Transparent"
-                         BorderThickness="0"
-                         SelectionMode="Multiple"
-                         ItemContainerStyle="{StaticResource ListItemStyle}"
-                         SelectionChanged="ListBoxWorkers_SelectionChanged">
-                    <ListBox.ItemTemplate>
-                        <DataTemplate>
-                            <Grid>
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="6"/>
-                                    <RowDefinition Height="Auto"/>
-                                    <RowDefinition Height="6"/>
-                                </Grid.RowDefinitions>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="2*"/>
-                                    <ColumnDefinition Width="2*"/>
-                                    <ColumnDefinition Width="1.2*"/>
-                                </Grid.ColumnDefinitions>
-                                <TextBlock Grid.Row="1" Grid.Column="0" Text="{Binding Familiya}" 
-                                           Style="{StaticResource ItemFamiliyaStyle}"/>
-                                <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding Dolzhnost}" 
-                                           Style="{StaticResource ItemDolzhnostStyle}"/>
-                                <TextBlock Grid.Row="1" Grid.Column="2" Text="{Binding Oklad, StringFormat=N2}" 
-                                           Style="{StaticResource ItemOkladStyle}"/>
-                            </Grid>
-                        </DataTemplate>
-                    </ListBox.ItemTemplate>
-                </ListBox>
-            </Grid>
-        </Border>
-
-        <Border Grid.Row="3" Grid.Column="3"
-                Style="{DynamicResource PanelStyle}">
-            <Grid>
-                <Grid.RowDefinitions>
                     <RowDefinition Height="15"/>
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="15"/>
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="15"/>
-                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="2*"/>
+                    <ColumnDefinition Width="10"/>
+                    <ColumnDefinition Width="1.3*"/>
                     <ColumnDefinition Width="15"/>
                 </Grid.ColumnDefinitions>
 
-                <StackPanel Grid.Row="1" Grid.Column="1">
-                    <TextBlock Text="Добавить / изменить" 
-                               Style="{DynamicResource PanelTitleStyle}"/>
-
-                    <TextBlock Text="Фамилия:" Style="{StaticResource LabelStyle}"/>
-                    <TextBox x:Name="txtFamiliya" 
-                             Style="{StaticResource InputStyle}"
-                             PreviewTextInput="TxtFamiliya_PreviewTextInput"/>
-
-                    <TextBlock Text="Должность:" Style="{StaticResource LabelStyle}"/>
-                    <TextBox x:Name="txtDolzhnost" 
-                             Style="{StaticResource InputStyle}"
-                             PreviewTextInput="TxtDolzhnost_PreviewTextInput"/>
-
-                    <TextBlock Text="Оклад:" Style="{StaticResource LabelStyle}"/>
-                    <TextBox x:Name="txtOklad" 
-                             Style="{StaticResource InputStyle}"
-                             PreviewTextInput="TxtOklad_PreviewTextInput"
-                             PreviewKeyDown="TxtOklad_PreviewKeyDown"/>
-
+                <!-- Левая панель: список -->
+                <Border Grid.Row="1" Grid.Column="1" Style="{StaticResource PanelStyle}">
                     <Grid>
                         <Grid.RowDefinitions>
-                            <RowDefinition Height="15"/>
                             <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="*"/>
                         </Grid.RowDefinitions>
-                        <StackPanel Grid.Row="1" Orientation="Horizontal" 
-                                    HorizontalAlignment="Center">
-                            <Button Content="Добавить" Width="100" 
-                                    Style="{StaticResource ButtonStyle}" Click="BtnAdd_Click"/>
-                            <Button Content="Изменить" Width="100" 
-                                    Style="{StaticResource ButtonStyle}" Click="BtnEdit_Click"/>
-                            <Button Content="Уволить" Width="100" 
-                                    Style="{StaticResource ButtonStyle}" Click="BtnDelete_Click"/>
-                        </StackPanel>
-                    </Grid>
-                </StackPanel>
-            </Grid>
-        </Border>
 
-        <Border Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="3"
-                Style="{DynamicResource PanelStyle}">
-            <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="12"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="12"/>
-                </Grid.RowDefinitions>
-                <StackPanel Grid.Row="1" Orientation="Horizontal" 
-                            HorizontalAlignment="Center">
-                    <Button Content="Увеличить оклад на 15%" 
-                            Width="230" 
-                            Style="{StaticResource ButtonStyle}" 
-                            Click="BtnIncreaseSalary_Click"/>
-                    <Button Content="Присвоить 'Инженер' (Иван*)" 
-                            Width="250" 
-                            Style="{StaticResource ButtonStyle}" 
-                            Click="BtnAssignEngineer_Click"/>
-                </StackPanel>
+                        <Border Grid.Row="0" Style="{StaticResource TableHeaderStyle}">
+                            <Grid Margin="0,8">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="2*"/>
+                                    <ColumnDefinition Width="2*"/>
+                                    <ColumnDefinition Width="1.2*"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Grid.Column="0" Text="Фамилия"
+                                           Style="{StaticResource HeaderCellStyle}"/>
+                                <TextBlock Grid.Column="1" Text="Должность"
+                                           Style="{StaticResource HeaderCellStyle}"/>
+                                <TextBlock Grid.Column="2" Text="Оклад"
+                                           Style="{StaticResource HeaderCellStyle}"
+                                           HorizontalAlignment="Right" Margin="0,0,15,0"/>
+                            </Grid>
+                        </Border>
+
+                        <ListBox x:Name="listBoxWorkers" Grid.Row="1"
+                                 Background="Transparent"
+                                 BorderThickness="0"
+                                 SelectionMode="Multiple"
+                                 ItemContainerStyle="{StaticResource ListItemStyle}"
+                                 SelectionChanged="ListBoxWorkers_SelectionChanged"
+                                 Margin="5">
+                            <ListBox.ItemTemplate>
+                                <DataTemplate>
+                                    <Grid Margin="0,6">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="2*"/>
+                                            <ColumnDefinition Width="2*"/>
+                                            <ColumnDefinition Width="1.2*"/>
+                                        </Grid.ColumnDefinitions>
+                                        <TextBlock Grid.Column="0" Text="{Binding Familiya}"
+                                                   Style="{StaticResource ItemFamiliyaStyle}"/>
+                                        <TextBlock Grid.Column="1" Text="{Binding Dolzhnost}"
+                                                   Style="{StaticResource ItemDolzhnostStyle}"/>
+                                        <TextBlock Grid.Column="2" Text="{Binding Oklad, StringFormat=N2}"
+                                                   Style="{StaticResource ItemOkladStyle}"/>
+                                    </Grid>
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                        </ListBox>
+                    </Grid>
+                </Border>
+
+                <!-- Правая панель -->
+                <Border Grid.Row="1" Grid.Column="3" Style="{StaticResource PanelStyle}">
+                    <StackPanel Margin="15">
+                        <TextBlock Text="Добавить / изменить"
+                                   Style="{StaticResource PanelTitleStyle}"/>
+
+                        <TextBlock Text="Фамилия:" Style="{StaticResource LabelStyle}"/>
+                        <TextBox x:Name="txtFamiliya" Style="{StaticResource InputStyle}"
+                                 PreviewTextInput="TxtFamiliya_PreviewTextInput"/>
+
+                        <TextBlock Text="Должность:" Style="{StaticResource LabelStyle}"/>
+                        <TextBox x:Name="txtDolzhnost" Style="{StaticResource InputStyle}"
+                                 PreviewTextInput="TxtDolzhnost_PreviewTextInput"/>
+
+                        <TextBlock Text="Оклад:" Style="{StaticResource LabelStyle}"/>
+                        <TextBox x:Name="txtOklad" Style="{StaticResource InputStyle}"
+                                 PreviewTextInput="TxtOklad_PreviewTextInput"
+                                 PreviewKeyDown="TxtOklad_PreviewKeyDown"/>
+
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,15,0,0">
+                            <Button Content="Добавить" Width="100"
+                                    Style="{StaticResource ButtonStyle}" Click="BtnAdd_Click"/>
+                            <Button Content="Изменить" Width="100"
+                                    Style="{StaticResource ButtonStyle}" Click="BtnEdit_Click"/>
+                            <Button Content="Уволить" Width="100"
+                                    Style="{StaticResource DangerButtonStyle}" Click="BtnDelete_Click"/>
+                        </StackPanel>
+
+                    </StackPanel>
+                </Border>
+
+                <!-- Нижняя панель -->
+                <Border Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="3"
+                        Style="{StaticResource PanelStyle}">
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center"
+                                Margin="0,12">
+                        <Button Content="📈 Увеличить оклад на 15%" Width="230"
+                                Style="{StaticResource ButtonStyle}"
+                                Click="BtnIncreaseSalary_Click"/>
+                        <Button Content="👷 Присвоить 'Инженер' (Иван*)" Width="250"
+                                Style="{StaticResource ButtonStyle}"
+                                Click="BtnAssignEngineer_Click"/>
+                    </StackPanel>
+                </Border>
             </Grid>
-        </Border>
-    </Grid>
+        </Grid>
+    </Border>
 </Window>
