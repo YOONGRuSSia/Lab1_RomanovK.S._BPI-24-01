@@ -5,56 +5,177 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Lab1_2_RomanovK.S._BPI_24_01"
         mc:Ignorable="d"
-        Title="Математический калькулятор" Height="400" Width="500"
-        MinHeight="400" MinWidth="500"
+        Title="Математический калькулятор" Height="680" Width="520"
+        MinHeight="500" MinWidth="440"
         WindowStartupLocation="CenterScreen"
-        Style="{DynamicResource WindowStyle}">
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="Auto"/>
-        </Grid.RowDefinitions>
+        Style="{StaticResource WindowStyle}">
 
-        <Border Grid.Row="0" Style="{StaticResource WindowHeaderStyle}">
-            <TextBlock Text="Калькулятор функций arcsin и arccos" 
-                       Style="{StaticResource WindowHeaderTextStyle}"/>
-        </Border>
 
-        <Border Grid.Row="1" Style="{StaticResource PanelStyle}">
-            <StackPanel>
-                <TextBlock Text="Введите число от -1 до 1:" 
-                           Style="{StaticResource LabelStyle}"/>
-                <TextBox x:Name="txtInput" 
-                         Style="{StaticResource InputStyle}"
-                         LostFocus="TxtInput_LostFocus"/>
-                <Button Content="Вычислить" 
+    <Border Background="{DynamicResource WindowBackgroundBrush}"
+        BorderBrush="{DynamicResource BorderBrushDark}"
+        BorderThickness="1">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <!-- TitleBar -->
+                <RowDefinition Height="*"/>
+                <!-- Контент -->
+            </Grid.RowDefinitions>
+
+            <!-- ============ TITLEBAR ============ -->
+            <Border Grid.Row="0"
+                Background="{DynamicResource HeaderGradient}"
+                Height="42"
+                MouseLeftButtonDown="TitleBar_MouseDown">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+
+                    <!-- RadioButton темы -->
+                    <StackPanel Grid.Column="0"
+                            Orientation="Horizontal"
+                            VerticalAlignment="Center"
+                            Margin="15,0,0,0"
+                            WindowChrome.IsHitTestVisibleInChrome="True">
+                        <RadioButton x:Name="rbDark"
+                                 Content="Тёмная"
+                                 GroupName="Theme"
+                                 Style="{StaticResource ThemeRadioStyle}"
+                                 Checked="Theme_Checked"
+                                 Tag="Dark"/>
+                        <RadioButton x:Name="rbLight"
+                                 Content="Светлая"
+                                 GroupName="Theme"
+                                 Style="{StaticResource ThemeRadioStyle}"
+                                 Checked="Theme_Checked"
+                                 Tag="Light"/>
+                    </StackPanel>
+
+                    <!-- Заголовок -->
+                    <TextBlock Grid.Column="1"
+                           Text="Калькулятор arcsin и arccos"
+                           Foreground="{DynamicResource AccentTextBrush}"
+                           FontSize="14"
+                           FontWeight="SemiBold"
+                           HorizontalAlignment="Center"
+                           VerticalAlignment="Center"/>
+
+                    <!-- Системные кнопки -->
+                    <StackPanel Grid.Column="2"
+                            Orientation="Horizontal"
+                            VerticalAlignment="Center"
+                            WindowChrome.IsHitTestVisibleInChrome="True">
+                        <Button Content="—"
+                            Style="{StaticResource TitleBarButtonStyle}"
+                            Click="Minimize_Click"/>
+                        <Button Content="□"
+                            Style="{StaticResource TitleBarButtonStyle}"
+                            Click="Maximize_Click"/>
+                        <Button Content="✕"
+                            Style="{StaticResource TitleBarCloseButtonStyle}"
+                            Click="Close_Click"/>
+                    </StackPanel>
+                </Grid>
+            </Border>
+
+            <!-- ============ ОСНОВНОЙ КОНТЕНТ ============ -->
+            <Grid Grid.Row="1" Margin="20">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <!-- ПАНЕЛЬ ВВОДА -->
+                <Border Grid.Row="0" Style="{StaticResource PanelStyle}" Margin="0,0,0,15">
+                    <StackPanel Margin="18">
+                        <TextBlock Text="Введите значение X:"
+                                   Style="{StaticResource LabelStyle}"
+                                   Margin="0,0,0,6"/>
+
+                        <TextBox x:Name="txtInput"
+                                 Style="{StaticResource InputStyle}"
+                                 LostFocus="TxtInput_LostFocus"
+                                 KeyDown="TxtInput_KeyDown"
+                                 FontSize="15"
+                                 Height="38"/>
+
+                        <TextBlock Text="Допустимый диапазон: от -1 до 1. Нажмите Enter или щёлкните вне поля для расчёта."
+                                   Foreground="{DynamicResource SecondaryTextBrush}"
+                                   FontSize="11"
+                                   TextWrapping="Wrap"
+                                   Margin="0,6,0,10"/>
+
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+
+                            <Button Grid.Column="0"
+                                    Content="Вычислить"
+                                    Style="{StaticResource ButtonStyle}"
+                                    Click="BtnCalculate_Click"
+                                    Height="38"
+                                    FontSize="14"
+                                    Margin="0,0,5,0"/>
+
+                            <Button Grid.Column="1"
+                                    Content="Очистить"
+                                    Style="{StaticResource DangerButtonStyle}"
+                                    Click="BtnClear_Click"
+                                    Height="38"
+                                    FontSize="14"
+                                    Width="100"
+                                    Margin="5,0,0,0"/>
+                        </Grid>
+                    </StackPanel>
+                </Border>
+
+                <!-- ПАНЕЛЬ РЕЗУЛЬТАТОВ -->
+                <Border Grid.Row="1" Style="{StaticResource PanelStyle}" Margin="0,0,0,15">
+                    <Grid Margin="18">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+
+                        <TextBlock Grid.Row="0" Text="Результаты вычислений"
+                                   Style="{StaticResource PanelTitleStyle}"
+                                   Margin="0,0,0,10"/>
+
+                        <Border Grid.Row="1"
+                                BorderBrush="{DynamicResource BorderBrushDark}"
+                                BorderThickness="1"
+                                CornerRadius="6"
+                                Background="{DynamicResource InputBackgroundBrush}">
+                            <ScrollViewer VerticalScrollBarVisibility="Auto"
+                                          HorizontalScrollBarVisibility="Disabled">
+                                <TextBlock x:Name="txtOutput"
+                                           FontSize="14"
+                                           TextWrapping="Wrap"
+                                           FontFamily="Consolas"
+                                           LineHeight="22"
+                                           Foreground="{DynamicResource TextBrush}"
+                                           Margin="12"/>
+                            </ScrollViewer>
+                        </Border>
+                    </Grid>
+                </Border>
+
+                <!-- КНОПКА "О ПРОГРАММЕ" -->
+                <Button Grid.Row="2"
+                        Content="ℹ  О программе"
                         Style="{StaticResource ButtonStyle}"
-                        Click="BtnCalculate_Click"/>
-            </StackPanel>
-        </Border>
-
-        <Border Grid.Row="2" Style="{StaticResource PanelStyle}">
-            <StackPanel>
-                <TextBlock Text="Результаты вычислений:" 
-                           Style="{StaticResource PanelTitleStyle}"/>
-                <ScrollViewer Height="150" VerticalScrollBarVisibility="Auto">
-                    <TextBlock x:Name="txtOutput" 
-                               FontSize="14" 
-                               TextWrapping="Wrap" 
-                               FontFamily="Segoe UI" 
-                               LineHeight="22"
-                               Foreground="{DynamicResource TextColor}"/>
-                </ScrollViewer>
-            </StackPanel>
-        </Border>
-
-        <Button Grid.Row="3" 
-                Content="О программе" 
-                Style="{StaticResource ButtonStyle}"
-                Click="BtnInfo_Click"
-                HorizontalAlignment="Center"/>
-    </Grid>
+                        Click="BtnInfo_Click"
+                        HorizontalAlignment="Center"
+                        Height="34"
+                        Width="180"
+                        FontSize="13"/>
+            </Grid>
+        </Grid>
+    </Border>
 </Window>

@@ -5,35 +5,27 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Lab1_RomanovK.S._BPI_24_01"
         mc:Ignorable="d"
-        Title="Управление сотрудниками" Height="600" Width="1000"
+        Title="Управление сотрудниками" 
+        Height="600" Width="1000"
         MinWidth="900" MinHeight="550"
-        WindowStyle="None"
-        AllowsTransparency="True"
-        Background="Transparent"
-        ResizeMode="CanResize"
+        WindowStartupLocation="CenterScreen"
         Style="{StaticResource WindowStyle}">
 
-    <!-- Контейнер окна с закруглением и тенью -->
     <Border Background="{DynamicResource WindowBackgroundBrush}"
-            CornerRadius="8"
             BorderBrush="{DynamicResource BorderBrushDark}"
             BorderThickness="1">
-        <Border.Effect>
-            <DropShadowEffect BlurRadius="15" ShadowDepth="0" Opacity="0.3"/>
-        </Border.Effect>
-
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
-                <!-- кастомный TitleBar -->
+                <!-- TitleBar -->
                 <RowDefinition Height="*"/>
-                <!-- контент -->
+                <!-- Контент -->
             </Grid.RowDefinitions>
 
-            <!-- ============ КАСТОМНЫЙ TITLEBAR ============ -->
+            <!-- ============ TITLEBAR ============ -->
             <Border Grid.Row="0"
                     Background="{DynamicResource HeaderGradient}"
-                    CornerRadius="8,8,0,0"
+                    Height="42"
                     MouseLeftButtonDown="TitleBar_MouseDown">
                 <Grid>
                     <Grid.ColumnDefinitions>
@@ -42,11 +34,12 @@
                         <ColumnDefinition Width="Auto"/>
                     </Grid.ColumnDefinitions>
 
-                    <!-- RadioButton для темы -->
+                    <!-- RadioButton темы -->
                     <StackPanel Grid.Column="0"
                                 Orientation="Horizontal"
                                 VerticalAlignment="Center"
-                                Margin="15,0,0,0">
+                                Margin="15,0,0,0"
+                                WindowChrome.IsHitTestVisibleInChrome="True">
                         <RadioButton x:Name="rbDark"
                                      Content="Тёмная"
                                      GroupName="Theme"
@@ -61,7 +54,7 @@
                                      Tag="Light"/>
                     </StackPanel>
 
-                    <!-- Заголовок окна -->
+                    <!-- Заголовок -->
                     <TextBlock Grid.Column="1"
                                Text="Управление сотрудниками"
                                Foreground="{DynamicResource AccentTextBrush}"
@@ -73,11 +66,12 @@
                     <!-- Системные кнопки -->
                     <StackPanel Grid.Column="2"
                                 Orientation="Horizontal"
-                                VerticalAlignment="Center">
+                                VerticalAlignment="Center"
+                                WindowChrome.IsHitTestVisibleInChrome="True">
                         <Button Content="—"
                                 Style="{StaticResource TitleBarButtonStyle}"
                                 Click="Minimize_Click"/>
-                        <Button Content="☐"
+                        <Button Content="□"
                                 Style="{StaticResource TitleBarButtonStyle}"
                                 Click="Maximize_Click"/>
                         <Button Content="✕"

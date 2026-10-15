@@ -6,36 +6,25 @@
         xmlns:local="clr-namespace:Lab1_RomanovK.S._BPI_24_01"
         mc:Ignorable="d"
         Title="Добавление сотрудника"
-        Height="450" Width="420"
-        MinWidth="420" MinHeight="450"
-        WindowStartupLocation="CenterOwner"
-        WindowStyle="None"
-        AllowsTransparency="True"
-        Background="Transparent"
+        Height="480" Width="460"
+        MinWidth="400" MinHeight="480"
+        WindowStartupLocation="CenterScreen"
         ResizeMode="CanResize"
         Style="{StaticResource WindowStyle}">
 
-    <!-- Закруглённая рамка -->
     <Border Background="{DynamicResource WindowBackgroundBrush}"
-            CornerRadius="8"
             BorderBrush="{DynamicResource BorderBrushDark}"
             BorderThickness="1">
-        <Border.Effect>
-            <DropShadowEffect BlurRadius="15" ShadowDepth="0" Opacity="0.3"/>
-        </Border.Effect>
-
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
-                <!-- TitleBar -->
                 <RowDefinition Height="*"/>
-                <!-- Контент -->
             </Grid.RowDefinitions>
 
             <!-- ============ TITLEBAR ============ -->
             <Border Grid.Row="0"
                     Background="{DynamicResource HeaderGradient}"
-                    CornerRadius="8,8,0,0"
+                    Height="42"
                     MouseLeftButtonDown="TitleBar_MouseDown">
                 <Grid>
                     <Grid.ColumnDefinitions>
@@ -44,11 +33,11 @@
                         <ColumnDefinition Width="Auto"/>
                     </Grid.ColumnDefinitions>
 
-                    <!-- RadioButton темы -->
                     <StackPanel Grid.Column="0"
                                 Orientation="Horizontal"
                                 VerticalAlignment="Center"
-                                Margin="15,0,0,0">
+                                Margin="15,0,0,0"
+                                WindowChrome.IsHitTestVisibleInChrome="True">
                         <RadioButton x:Name="rbDark"
                                      Content="Тёмная"
                                      GroupName="Theme"
@@ -63,7 +52,6 @@
                                      Tag="Light"/>
                     </StackPanel>
 
-                    <!-- Заголовок -->
                     <TextBlock Grid.Column="1"
                                Text="Новый сотрудник"
                                Foreground="{DynamicResource AccentTextBrush}"
@@ -72,10 +60,10 @@
                                HorizontalAlignment="Center"
                                VerticalAlignment="Center"/>
 
-                    <!-- Кнопка закрытия -->
                     <StackPanel Grid.Column="2"
                                 Orientation="Horizontal"
-                                VerticalAlignment="Center">
+                                VerticalAlignment="Center"
+                                WindowChrome.IsHitTestVisibleInChrome="True">
                         <Button Content="—"
                                 Style="{StaticResource TitleBarButtonStyle}"
                                 Click="Minimize_Click"/>
@@ -85,7 +73,6 @@
                     </StackPanel>
                 </Grid>
             </Border>
-
             <!-- ============ КОНТЕНТ ============ -->
             <Grid Grid.Row="1">
                 <Grid.RowDefinitions>

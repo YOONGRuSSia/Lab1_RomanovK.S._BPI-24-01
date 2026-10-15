@@ -79,18 +79,11 @@ namespace Lab1_RomanovK.S._BPI_24_01
         // ============ ПЕРЕТАСКИВАНИЕ ОКНА ЗА TITLEBAR ============
         private void TitleBar_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            if (e.ChangedButton == MouseButton.Left)
+            if (e.ChangedButton == MouseButton.Left && e.ClickCount == 2)
             {
-                if (e.ClickCount == 2)
-                {
-                    // Двойной клик — развернуть/свернуть
-                    Maximize_Click(sender, e);
-                }
-                else
-                {
-                    DragMove();
-                }
+                Maximize_Click(sender, e);
             }
+            // DragMove() не нужен — WindowChrome сам перетаскивает окно
         }
 
         private void TxtFamiliya_PreviewTextInput(object sender, TextCompositionEventArgs e)

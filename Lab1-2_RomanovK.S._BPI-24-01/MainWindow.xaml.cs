@@ -30,9 +30,71 @@ namespace Lab1_2_RomanovK.S._BPI_24_01
             arcsin = new ArcsinFunction();
             arccos = new ArccosFunction();
 
+            if (App.CurrentTheme == AppTheme.Dark)
+                rbDark.IsChecked = true;
+            else
+                rbLight.IsChecked = true;
+
             txtInput.Focus();
         }
+        // ============ СМЕНА ТЕМЫ ============
+        private void Theme_Checked(object sender, RoutedEventArgs e)
+        {
+            if (!(sender is RadioButton rb)) return;
+            if (rb.Tag == null) return;
 
+            AppTheme theme = rb.Tag.ToString() == "Dark"
+                ? AppTheme.Dark
+                : AppTheme.Light;
+
+            App.ApplyTheme(theme);
+        }
+
+        // ============ СИСТЕМНЫЕ КНОПКИ ОКНА ============
+        private void Minimize_Click(object sender, RoutedEventArgs e)
+        {
+            WindowState = WindowState.Minimized;
+        }
+
+        private void Maximize_Click(object sender, RoutedEventArgs e)
+        {
+            WindowState = WindowState == WindowState.Maximized
+                ? WindowState.Normal
+                : WindowState.Maximized;
+        }
+
+        private void Close_Click(object sender, RoutedEventArgs e)
+        {
+            Close();
+        }
+
+        private void TitleBar_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if (e.ChangedButton == MouseButton.Left && e.ClickCount == 2)
+            {
+                Maximize_Click(sender, e);
+            }
+            // DragMove() не нужен — WindowChrome сам перетаскивает окно
+        }
+
+
+        // ============ ENTER в TextBox ============
+        private void TxtInput_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter)
+            {
+                PerformCalculation(showMessageBox: true);
+                e.Handled = true;
+            }
+        }
+
+        // ============ ОЧИСТКА ============
+        private void BtnClear_Click(object sender, RoutedEventArgs e)
+        {
+            txtInput.Text = string.Empty;
+            txtOutput.Text = string.Empty;
+            txtInput.Focus();
+        }
         private void TxtInput_LostFocus(object sender, RoutedEventArgs e)
         {
             PerformCalculation(showMessageBox: false);

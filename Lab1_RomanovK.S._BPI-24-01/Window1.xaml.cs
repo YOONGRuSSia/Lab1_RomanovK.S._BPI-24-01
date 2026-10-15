@@ -55,10 +55,13 @@ namespace Lab1_RomanovK.S._BPI_24_01
         // ============ ПЕРЕТАСКИВАНИЕ ============
         private void TitleBar_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            if (e.ChangedButton == MouseButton.Left)
+            if (e.ChangedButton == MouseButton.Left && e.ClickCount == 2)
             {
-                DragMove();
+                WindowState = WindowState == WindowState.Maximized
+                    ? WindowState.Normal
+                    : WindowState.Maximized;
             }
+            // DragMove() не нужен — WindowChrome сам перетаскивает
         }
 
         private void TxtFamiliya_PreviewTextInput(object sender, TextCompositionEventArgs e)
