@@ -40,7 +40,6 @@ namespace Lab1_RomanovK.S._BPI_24_01
 
             App.ApplyTheme(theme);
         }
-        // ============ СИСТЕМНЫЕ КНОПКИ ============
         private void Minimize_Click(object sender, RoutedEventArgs e)
         {
             WindowState = WindowState.Minimized;
@@ -48,11 +47,9 @@ namespace Lab1_RomanovK.S._BPI_24_01
 
         private void Close_Click(object sender, RoutedEventArgs e)
         {
-            // Закрываем как диалог с результатом false (как «Отмена»)
             DialogResult = false;
         }
 
-        // ============ ПЕРЕТАСКИВАНИЕ ============
         private void TitleBar_MouseDown(object sender, MouseButtonEventArgs e)
         {
             if (e.ChangedButton == MouseButton.Left && e.ClickCount == 2)
@@ -61,7 +58,6 @@ namespace Lab1_RomanovK.S._BPI_24_01
                     ? WindowState.Normal
                     : WindowState.Maximized;
             }
-            // DragMove() не нужен — WindowChrome сам перетаскивает
         }
 
         private void TxtFamiliya_PreviewTextInput(object sender, TextCompositionEventArgs e)

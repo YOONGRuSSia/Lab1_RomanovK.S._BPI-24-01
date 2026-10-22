@@ -37,7 +37,6 @@ namespace Lab1_2_RomanovK.S._BPI_24_01
 
             txtInput.Focus();
         }
-        // ============ СМЕНА ТЕМЫ ============
         private void Theme_Checked(object sender, RoutedEventArgs e)
         {
             if (!(sender is RadioButton rb)) return;
@@ -50,7 +49,6 @@ namespace Lab1_2_RomanovK.S._BPI_24_01
             App.ApplyTheme(theme);
         }
 
-        // ============ СИСТЕМНЫЕ КНОПКИ ОКНА ============
         private void Minimize_Click(object sender, RoutedEventArgs e)
         {
             WindowState = WindowState.Minimized;
@@ -74,11 +72,9 @@ namespace Lab1_2_RomanovK.S._BPI_24_01
             {
                 Maximize_Click(sender, e);
             }
-            // DragMove() не нужен — WindowChrome сам перетаскивает окно
         }
 
 
-        // ============ ENTER в TextBox ============
         private void TxtInput_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Enter)
@@ -88,7 +84,6 @@ namespace Lab1_2_RomanovK.S._BPI_24_01
             }
         }
 
-        // ============ ОЧИСТКА ============
         private void BtnClear_Click(object sender, RoutedEventArgs e)
         {
             txtInput.Text = string.Empty;

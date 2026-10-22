@@ -17,12 +17,9 @@
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
-                <!-- TitleBar -->
                 <RowDefinition Height="*"/>
-                <!-- Контент -->
             </Grid.RowDefinitions>
 
-            <!-- ============ TITLEBAR ============ -->
             <Border Grid.Row="0"
                     Background="{DynamicResource HeaderGradient}"
                     Height="42"
@@ -34,7 +31,6 @@
                         <ColumnDefinition Width="Auto"/>
                     </Grid.ColumnDefinitions>
 
-                    <!-- RadioButton темы -->
                     <StackPanel Grid.Column="0"
                                 Orientation="Horizontal"
                                 VerticalAlignment="Center"
@@ -54,7 +50,6 @@
                                      Tag="Light"/>
                     </StackPanel>
 
-                    <!-- Заголовок -->
                     <TextBlock Grid.Column="1"
                                Text="Управление сотрудниками"
                                Foreground="{DynamicResource AccentTextBrush}"
@@ -63,7 +58,6 @@
                                HorizontalAlignment="Center"
                                VerticalAlignment="Center"/>
 
-                    <!-- Системные кнопки -->
                     <StackPanel Grid.Column="2"
                                 Orientation="Horizontal"
                                 VerticalAlignment="Center"
@@ -81,7 +75,6 @@
                 </Grid>
             </Border>
 
-            <!-- ============ ОСНОВНОЙ КОНТЕНТ (бывший Grid) ============ -->
             <Grid Grid.Row="1">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="15"/>
@@ -98,7 +91,6 @@
                     <ColumnDefinition Width="15"/>
                 </Grid.ColumnDefinitions>
 
-                <!-- Левая панель: список -->
                 <Border Grid.Row="1" Grid.Column="1" Style="{StaticResource PanelStyle}">
                     <Grid>
                         <Grid.RowDefinitions>
@@ -151,7 +143,6 @@
                     </Grid>
                 </Border>
 
-                <!-- Правая панель -->
                 <Border Grid.Row="1" Grid.Column="3" Style="{StaticResource PanelStyle}">
                     <StackPanel Margin="15">
                         <TextBlock Text="Добавить / изменить"
@@ -182,7 +173,6 @@
                     </StackPanel>
                 </Border>
 
-                <!-- Нижняя панель -->
                 <Border Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="3"
                         Style="{StaticResource PanelStyle}">
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Center"

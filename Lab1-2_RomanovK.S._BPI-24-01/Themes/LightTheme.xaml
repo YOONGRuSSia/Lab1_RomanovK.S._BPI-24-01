@@ -4,7 +4,6 @@
 
     <sys:String x:Key="ThemeName">Light</sys:String>
 
-    <!-- Цвета светлой темы -->
     <SolidColorBrush x:Key="WindowBackgroundBrush" Color="#F3E5F5"/>
     <SolidColorBrush x:Key="CardBackgroundBrush" Color="#FFFFFF"/>
     <SolidColorBrush x:Key="InputBackgroundBrush" Color="#F6F7F9"/>

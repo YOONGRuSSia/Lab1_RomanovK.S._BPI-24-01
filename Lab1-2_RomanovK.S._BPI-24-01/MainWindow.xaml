@@ -17,12 +17,9 @@
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
-                <!-- TitleBar -->
                 <RowDefinition Height="*"/>
-                <!-- Контент -->
             </Grid.RowDefinitions>
 
-            <!-- ============ TITLEBAR ============ -->
             <Border Grid.Row="0"
                 Background="{DynamicResource HeaderGradient}"
                 Height="42"
@@ -34,7 +31,6 @@
                         <ColumnDefinition Width="Auto"/>
                     </Grid.ColumnDefinitions>
 
-                    <!-- RadioButton темы -->
                     <StackPanel Grid.Column="0"
                             Orientation="Horizontal"
                             VerticalAlignment="Center"
@@ -54,7 +50,6 @@
                                  Tag="Light"/>
                     </StackPanel>
 
-                    <!-- Заголовок -->
                     <TextBlock Grid.Column="1"
                            Text="Калькулятор arcsin и arccos"
                            Foreground="{DynamicResource AccentTextBrush}"
@@ -63,7 +58,6 @@
                            HorizontalAlignment="Center"
                            VerticalAlignment="Center"/>
 
-                    <!-- Системные кнопки -->
                     <StackPanel Grid.Column="2"
                             Orientation="Horizontal"
                             VerticalAlignment="Center"
@@ -81,7 +75,6 @@
                 </Grid>
             </Border>
 
-            <!-- ============ ОСНОВНОЙ КОНТЕНТ ============ -->
             <Grid Grid.Row="1" Margin="20">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
@@ -89,7 +82,6 @@
                     <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
 
-                <!-- ПАНЕЛЬ ВВОДА -->
                 <Border Grid.Row="0" Style="{StaticResource PanelStyle}" Margin="0,0,0,15">
                     <StackPanel Margin="18">
                         <TextBlock Text="Введите значение X:"
@@ -135,7 +127,6 @@
                     </StackPanel>
                 </Border>
 
-                <!-- ПАНЕЛЬ РЕЗУЛЬТАТОВ -->
                 <Border Grid.Row="1" Style="{StaticResource PanelStyle}" Margin="0,0,0,15">
                     <Grid Margin="18">
                         <Grid.RowDefinitions>
@@ -166,7 +157,6 @@
                     </Grid>
                 </Border>
 
-                <!-- КНОПКА "О ПРОГРАММЕ" -->
                 <Button Grid.Row="2"
                         Content="ℹ  О программе"
                         Style="{StaticResource ButtonStyle}"
